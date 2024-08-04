@@ -10,11 +10,29 @@ app.use(express.json());
 app.use(cors());
 const PORT = process.env.PORT || process.env.API_PORT;
 
-// app.use("/", (req, res) => {
-//   console.log("request came");
-//   res.send("I got a big heart");
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "API is running" });
+});
+
+// app.get("/", (req, res) => {
+//   res.status(200).json({
+//     message: "Welcome to the Bookstore API",
+//     version: "1.0.0",
+//     documentation: "http://your-api-docs-url.com",
+//   });
 // });
+
 app.use("/api/auth", authRoutes);
+app.use((err, req, res, next) => {
+  if (!err) {
+    return next();
+  }
+
+  res.status(500);
+  res.send("500: Internal server error");
+});
+
+// database connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

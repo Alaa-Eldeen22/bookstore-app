@@ -1,12 +1,13 @@
 const router = require("express").Router();
 const joi = require("joi");
 const validator = require("express-joi-validation").createValidator({});
-const authControllers = require("../controllers/authControllers");
+const authControllers = require("../controllers/auth/authControllers");
 const registerSchema = joi.object({
   firstname: joi.string().min(1).max(20).required(),
   lastname: joi.string().min(1).max(20).required(),
   mail: joi.string().email().required(),
   password: joi.string().min(6).max(15).required(),
+  role: joi.string().valid("admin", "user").default("user"),
 });
 
 const loingScema = joi.object({
