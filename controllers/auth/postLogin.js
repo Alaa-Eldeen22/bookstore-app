@@ -12,6 +12,7 @@ const postLogin = async (req, res) => {
         {
           useId: user._id,
           mail,
+          role: user.role,
         },
         process.env.TOKEN_KEY,
         {
@@ -23,6 +24,7 @@ const postLogin = async (req, res) => {
         userDetails: {
           id: user._id,
           token,
+          role: user.role,
         },
       });
     } else {

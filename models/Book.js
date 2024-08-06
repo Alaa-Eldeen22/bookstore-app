@@ -7,3 +7,5 @@ const bookSchema = new mongoose.Schema({
   numberOfPages: { type: Number },
   description: { type: String },
 });
+
+module.exports = mongoose.model("Book", bookSchema);
