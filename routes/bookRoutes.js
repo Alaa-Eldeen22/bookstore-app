@@ -1,14 +1,10 @@
 const authUser = require("../middleware/authUser");
 const authRole = require("../middleware/authRole");
 const router = require("express").Router();
-const BookCreationController = require("../controllers/book/bookCreationController");
-const BookCreationService = require("../services/book/BookCreationService");
-const Book = require("../models/Book");
+const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const bookSchema = require("../validation/schemas/bookValidation");
-const bookCreationservice = new BookCreationService(Book);
-const bookCreationcontroller = new BookCreationController(bookCreationservice);
-
+const bookCreationcontroller = di.bookCreationcontroller;
 router.post(
   "/",
   authUser,
@@ -17,4 +13,5 @@ router.post(
   bookCreationcontroller.addBook
 );
 
+router.get("/");
 module.exports = router;
