@@ -41,6 +41,9 @@ class DIContainer {
       this.bookRetrievalService = new BookRetrievalService(Book);
 
       this.bookDeletionService = new BookDeletionService(Book);
+
+      this.bookUpdateService = new BookUpdateService(Book);
+
       // controllers
       this.registerController = new RegisterController(this.registerService);
 
@@ -56,6 +59,10 @@ class DIContainer {
 
       this.bookDeletionController = new BookDeletionController(
         this.bookDeletionService
+      );
+
+      this.bookUpdateController = new BookUpdateController(
+        this.bookUpdateService
       );
 
       DIContainer.instance = this;
