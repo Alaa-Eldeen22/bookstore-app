@@ -1,6 +1,7 @@
 class BookDeletionController {
   constructor(bookDeletionService) {
     this.bookDeletionService = bookDeletionService;
+    this.deleteBook = this.deleteBook.bind(this);
   }
 
   async deleteBook(req, res) {

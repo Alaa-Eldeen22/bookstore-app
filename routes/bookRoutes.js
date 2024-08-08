@@ -7,6 +7,7 @@ const bookSchema = require("../validation/schemas/bookValidation");
 
 const bookCreationcontroller = di.bookCreationcontroller;
 const bookRetrievalController = di.bookRetrievalController;
+const bookDeletionController = di.bookDeletionController;
 
 router.post(
   "/",
@@ -17,6 +18,14 @@ router.post(
 );
 
 router.get("/bookId/:bookId", bookRetrievalController.getBook);
+
 router.get("/", bookRetrievalController.getAllBooks);
+
+router.delete(
+  "/bookId:bookId",
+  authUser,
+  authRole,
+  bookDeletionController.deleteBook
+);
 
 module.exports = router;
