@@ -4,7 +4,10 @@ const router = require("express").Router();
 const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const bookSchema = require("../validation/schemas/bookValidation");
+
 const bookCreationcontroller = di.bookCreationcontroller;
+const bookRetrievalController = di.bookRetrievalController;
+
 router.post(
   "/",
   authUser,
@@ -13,5 +16,7 @@ router.post(
   bookCreationcontroller.addBook
 );
 
-router.get("/");
+router.get("/bookId/:bookId", bookRetrievalController.getBook);
+router.get("/", bookRetrievalController.getAllBooks);
+
 module.exports = router;
