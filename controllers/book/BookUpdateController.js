@@ -1,18 +1,28 @@
-class BookCreationController {
-    constructor(bookCreationService) {
-      this.bookCreationService = bookCreationService;
-    }
-  
-    async addBook(req, res) {
-      try {
-        const book = await this.bookCreationService.createBook(req.body);
-        res.status(201).json({ message: "Book added successfully", book });
-      } catch (err) {
-        console.error("Error adding book:", err);
-        res.status(500).json({ message: "An error occurred while adding the book. Please try again later." });
+class BookUpdateController {
+  constructor(bookUpdateService) {
+    this.bookUpdateService = bookUpdateService;
+  }
+
+  async updateBook(req, res) {
+    try {
+      const book = await this.bookUpdateService.updateBook(
+        req.params.id,
+        req.body
+      );
+      if (!book) {
+        return res.status(404).json({ message: "Book not found" });
       }
+      res.status(200).json({ message: "Book updated successfully", book });
+    } catch (err) {
+      console.error("Error updating book:", err);
+      res
+        .status(500)
+        .json({
+          message:
+            "An error occurred while updating the book. Please try again later.",
+        });
     }
   }
-  
-  module.exports = BookCreationController;
-  
+}
+
+module.exports = BookUpdateController;

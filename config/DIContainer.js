@@ -4,17 +4,19 @@ const User = require("../models/User");
 const passwordUtilss = require("../utils/passwordUtils");
 const tokenUtils = require("../utils/tokenUtils");
 
-const BookCreationController = require("../controllers/book/BookCreationController");
-const LoginController = require("../controllers/auth/LoginController");
 const RegisterController = require("../controllers/auth/RegisterController");
+const LoginController = require("../controllers/auth/LoginController");
+const BookCreationController = require("../controllers/book/BookCreationController");
 const BookRetrievalController = require("../controllers/book/BookRetrievalController");
 const BookDeletionController = require("../controllers/book/BookDeletionController");
+const BookUpdateController = require("../controllers/book/BookUpdateController");
 
-const BookCreationService = require("../services/book/BookCreationService");
-const LoginService = require("../services/auth/LoginService");
 const RegisterService = require("../services/auth/RegisterService");
+const LoginService = require("../services/auth/LoginService");
+const BookCreationService = require("../services/book/BookCreationService");
 const BookRetrievalService = require("../services/book/BookRetrievalService");
 const BookDeletionService = require("../services/book/BookDeletionService");
+const BookUpdateService = require("../services/book/BookUpdateService");
 
 class DIContainer {
   constructor() {
@@ -55,7 +57,7 @@ class DIContainer {
       this.bookDeletionController = new BookDeletionController(
         this.bookDeletionService
       );
-      
+
       DIContainer.instance = this;
     }
 
