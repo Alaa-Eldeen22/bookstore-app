@@ -16,7 +16,7 @@ const authUser = (req, res, next) => {
     req.user = decoded;
     return next();
   } catch (err) {
-    res.status(401).json({ message: "Token not valid" }); // Fixed typo in status method
+    res.status(401).json({ message: "Token not valid" });
   }
 };
 
