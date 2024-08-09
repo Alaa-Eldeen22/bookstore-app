@@ -3,28 +3,65 @@ const authRole = require("../middleware/authRole");
 const router = require("express").Router();
 const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
-const bookSchema = require("../validation/schemas/bookValidation");
+const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
+const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
+const bookIdSchema = require("../validation/schemas/bookIdSchema");
 
 const bookCreationcontroller = di.bookCreationcontroller;
 const bookRetrievalController = di.bookRetrievalController;
 const bookDeletionController = di.bookDeletionController;
+const bookUpdateController = di.bookUpdateController;
 
+router.get(
+  "/",
+
+  bookRetrievalController.getAllBooks
+);
+
+router.get(
+  "/:id",
+
+  validator.params(bookIdSchema),
+
+  bookRetrievalController.getBook
+);
+
+// protect routes
 router.post(
   "/",
+
   authUser,
+
   authRole("admin"),
-  validator.body(bookSchema),
+
+  validator.body(bookCreationSchema),
+
   bookCreationcontroller.addBook
 );
 
-router.get("/bookId/:bookId", bookRetrievalController.getBook);
+router.put(
+  "/:id",
 
-router.get("/", bookRetrievalController.getAllBooks);
+  authUser,
+
+  authRole("admin"),
+
+  validator.params(bookIdSchema),
+
+  validator.body(bookUpdateSchema),
+
+  bookUpdateController.updateBook
+);
 
 router.delete(
-  "/bookId:bookId",
+  "/:id",
+
   authUser,
-  authRole,
+
+  authRole("admin"),
+
+  validator.params(bookIdSchema),
+
   bookDeletionController.deleteBook
 );
 

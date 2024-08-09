@@ -1,4 +1,4 @@
-const { message } = require("../../validation/schemas/bookValidation");
+const { message } = require("../../validation/schemas/bookCreationValidation");
 
 class RegisterController {
   constructor(registerService) {

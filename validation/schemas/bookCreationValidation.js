@@ -1,7 +1,6 @@
-// const joi = require("joi");
 const Joi = require("joi");
 
-const bookSchema = Joi.object({
+const bookCreationSchema = Joi.object({
   name: Joi.string().min(1).max(100).required(),
   category: Joi.string().min(1).max(50).required(),
   author: Joi.string().min(1).max(50).required(),
@@ -9,4 +8,4 @@ const bookSchema = Joi.object({
   description: Joi.string().max(500).optional(),
 });
 
-module.exports = bookSchema;
+module.exports = bookCreationSchema;
