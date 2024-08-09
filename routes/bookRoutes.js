@@ -7,6 +7,8 @@ const bookCreationSchema = require("../validation/schemas/bookCreationValidation
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
 const bookIdSchema = require("../validation/schemas/bookIdSchema");
 
+const roles = require("../config/roles");
+
 const bookCreationcontroller = di.bookCreationcontroller;
 const bookRetrievalController = di.bookRetrievalController;
 const bookDeletionController = di.bookDeletionController;
@@ -32,7 +34,7 @@ router.post(
 
   authUser,
 
-  authRole("admin"),
+  authRole(roles.ADMIN),
 
   validator.body(bookCreationSchema),
 
@@ -44,7 +46,7 @@ router.put(
 
   authUser,
 
-  authRole("admin"),
+  authRole(roles.ADMIN),
 
   validator.params(bookIdSchema),
 
@@ -58,7 +60,7 @@ router.delete(
 
   authUser,
 
-  authRole("admin"),
+  authRole(roles.ADMIN),
 
   validator.params(bookIdSchema),
 
