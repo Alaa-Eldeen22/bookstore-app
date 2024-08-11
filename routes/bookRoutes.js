@@ -15,6 +15,7 @@ const bookRetrievalController = di.bookRetrievalController;
 const bookDeletionController = di.bookDeletionController;
 const bookUpdateController = di.bookUpdateController;
 
+const reviewCreationController = di.reviewCreationController;
 router.get(
   "/",
   bookRetrievalController.getAllBooks
@@ -50,5 +51,11 @@ router.delete(
   validateBookId,
   bookDeletionController.deleteBook
 );
+
+router.post(
+  "/:bookId/reviews", 
+  authUser, validateBookId, 
+  reviewCreationController.addReview
+)
 
 module.exports = router;
