@@ -7,7 +7,7 @@ class BookUpdateController {
   async updateBook(req, res) {
     try {
       const book = await this.bookUpdateService.updateBook(
-        req.params.id,
+        req.params.bookId,
         req.body
       );
       if (!book) {
