@@ -16,6 +16,7 @@ class BookUpdateController {
         .json({ message: "Book updated successfully", book });
     } catch (err) {
       console.error("Error updating book:", err);
+
       res.status(500).json({
         message:
           "An error occurred while updating the book. Please try again later.",
