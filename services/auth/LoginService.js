@@ -11,8 +11,12 @@ class LoginService {
     try {
       const user = await this.UserModel.findOne({ mail: mail.toLowerCase() });
 
-      if (!user || !(await this.comparePasswords(password, user.password))) {
-        throw new Error("Invalid credentials");
+      if (!user || !(await this.compareSPasswords(password, user.password))) {
+        const error = new Error(
+          "There was a problem logging in. Check your email and password or create an account."
+        );
+        error.statusCode = 401;
+        throw error;
       }
 
       const token = this.generateToken(user, this.tokenKey);

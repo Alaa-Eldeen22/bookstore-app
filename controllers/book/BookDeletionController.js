@@ -13,10 +13,7 @@ class BookDeletionController {
         .json({ message: "Book deleted successfully", book });
     } catch (err) {
       console.error("Error deleting book:", err);
-      res.status(500).json({
-        message:
-          "An error occurred while deleting the book. Please try again later.",
-      });
+      next(err);
     }
   }
 }

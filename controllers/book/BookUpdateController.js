@@ -4,7 +4,7 @@ class BookUpdateController {
     this.updateBook = this.updateBook.bind(this);
   }
 
-  async updateBook(req, res) {
+  async updateBook(req, res, next) {
     try {
       const book = await this.bookUpdateService.updateBook(
         req.params.bookId,
@@ -17,10 +17,7 @@ class BookUpdateController {
     } catch (err) {
       console.error("Error updating book:", err);
 
-      res.status(500).json({
-        message:
-          "An error occurred while updating the book. Please try again later.",
-      });
+      next(err);
     }
   }
 }

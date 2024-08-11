@@ -10,11 +10,16 @@ class RegisterService {
       const userExist = await this.UserModel.exists({
         mail: mail.toLowerCase(),
       });
+
       if (userExist) {
-        throw new Error("Email already used");
+
+        const error =  new Error("Email already used");
+        error.statusCode = 409;
+        throw error;
       }
 
       const encryptedPassword = await this.encryptPassword(password);
+
       const user = await this.UserModel.create({
         firstname,
         lastname,

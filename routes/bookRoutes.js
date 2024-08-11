@@ -1,12 +1,12 @@
-const authUser = require("../middleware/authUser");
-const authRole = require("../middleware/authRole");
+const authUser = require("../middlewares/authUser");
+const authRole = require("../middlewares/authRole");
 const router = require("express").Router();
 const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
 const bookIdSchema = require("../validation/schemas/bookIdSchema");
-const validateBookId = require("../middleware/validateBookId");
+const validateBookId = require("../middlewares/validateBookId");
 
 const roles = require("../config/roles");
 
@@ -16,16 +16,9 @@ const bookDeletionController = di.bookDeletionController;
 const bookUpdateController = di.bookUpdateController;
 
 const reviewCreationController = di.reviewCreationController;
-router.get(
-  "/",
-  bookRetrievalController.getAllBooks
-);
+router.get("/", bookRetrievalController.getAllBooks);
 
-router.get(
-  "/:bookId",
-  validateBookId,
-  bookRetrievalController.getBook
-);
+router.get("/:bookId", validateBookId, bookRetrievalController.getBook);
 
 router.post(
   "/",
@@ -53,9 +46,10 @@ router.delete(
 );
 
 router.post(
-  "/:bookId/reviews", 
-  authUser, validateBookId, 
+  "/:bookId/reviews",
+  authUser,
+  validateBookId,
   reviewCreationController.addReview
-)
+);
 
 module.exports = router;

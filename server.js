@@ -2,10 +2,9 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const authUser = require("./middleware/authUser");
-const authRole = require("./middleware/authRole");
 const authRoutes = require("./routes/authRoutes");
 const bookRoutes = require("./routes/bookRoutes");
+const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 
@@ -16,12 +15,7 @@ const PORT = process.env.PORT || process.env.API_PORT;
 app.use("/api/auth", authRoutes);
 
 app.use("/api/books", bookRoutes);
-app.use("/api/protect", authUser, authRole("admin"), (req, res) => {
-  console.log(req.user);
-  res.status(201).json({ message: "accessed allowed" });
-});
-// app.use("/api/book");
-// app.use
+
 // database connection
 mongoose
   .connect(process.env.MONGO_URI)
@@ -35,10 +29,11 @@ mongoose
     console.log(err);
   });
 
-app.get("/", (req, res) => {
+app.use("/", (req, res) => {
   res.status(200).json({ message: "API is running" });
 });
 
+app.use(errorHandler);
 // app.use((err, req, res, next) => {
 //   if (!err) {
 //     return next();

@@ -4,7 +4,7 @@ class ReviewCreationController {
     this.addReview = this.addReview.bind(this);
   }
 
-  async addReview(req, res) {
+  async addReview(req, res, next) {
     try {
       const review = await this.reviewCreationService.addReview(
         req.params.bookId,
@@ -14,17 +14,9 @@ class ReviewCreationController {
 
       res.status(200).json({ message: "Review added successfully", review });
     } catch (err) {
-      console.log("Error adding review:", err);
-      if (err.message == "You have already reviewed this book.") {
-        return res
-          .status(400)
-          .json({ message: "You have already reviewed this book." });
-      }
+      console.log(err);
 
-      res.status(500).json({
-        message:
-          "An error occurred while adding the review. Please try again later",
-      });
+      next(err);
     }
   }
 }

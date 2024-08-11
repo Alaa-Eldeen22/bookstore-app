@@ -5,33 +5,25 @@ class BookRetrievalController {
     this.getBook = this.getBook.bind(this);
   }
 
-  async getAllBooks(req, res) {
-    // console.log(req.params);
+  async getAllBooks(req, res, next) {
     try {
       const books = await this.bookRetrievalService.getAllBooks();
 
       res.status(200).json({ books });
     } catch (err) {
       console.log("Error fetching book", err);
-
-      res.status(500).json({
-        message:
-          "An error ocurred while fetching books. Please try again later.",
-      });
+      next(err);
     }
   }
 
-  async getBook(req, res) {
+  async getBook(req, res, next) {
     try {
       const book = await this.bookRetrievalService.getBook(req.params.bookId);
 
       return res.status(200).json({ book });
     } catch (err) {
       console.error("Error fetching book:", err);
-      res.status(500).json({
-        message:
-          "An error occurred while fetching the book. Please try again later.",
-      });
+      next(err);
     }
   }
 }
