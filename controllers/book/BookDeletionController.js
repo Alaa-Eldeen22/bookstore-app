@@ -5,12 +5,8 @@ class BookDeletionController {
   }
 
   async deleteBook(req, res) {
-    // console.log("from delete book controller");
     try {
       const book = await this.bookDeletionService.deleteBook(req.params.bookId);
-      if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-      }
 
       return res
         .status(200)

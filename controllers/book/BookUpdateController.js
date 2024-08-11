@@ -10,9 +10,7 @@ class BookUpdateController {
         req.params.bookId,
         req.body
       );
-      if (!book) {
-        return res.status(404).json({ message: "Book not found" });
-      }
+
       return res
         .status(200)
         .json({ message: "Book updated successfully", book });

@@ -22,12 +22,8 @@ class BookRetrievalController {
   }
 
   async getBook(req, res) {
-    // console.log(req.params.bookId);
     try {
       const book = await this.bookRetrievalService.getBook(req.params.bookId);
-      if (!book) {
-        return res.status(404).json({ message: "Book not found." });
-      }
 
       return res.status(200).json({ book });
     } catch (err) {
