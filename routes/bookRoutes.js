@@ -6,6 +6,7 @@ const validator = require("express-joi-validation").createValidator({});
 const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
 const bookIdSchema = require("../validation/schemas/bookIdSchema");
+const validateBookId = require("../middleware/validateBookId");
 
 const roles = require("../config/roles");
 
@@ -16,54 +17,37 @@ const bookUpdateController = di.bookUpdateController;
 
 router.get(
   "/",
-
   bookRetrievalController.getAllBooks
 );
 
 router.get(
-  "/:id",
-
-  validator.params(bookIdSchema),
-
+  "/:bookId",
+  validateBookId,
   bookRetrievalController.getBook
 );
 
-// protect routes
 router.post(
   "/",
-
   authUser,
-
   authRole(roles.ADMIN),
-
   validator.body(bookCreationSchema),
-
   bookCreationcontroller.addBook
 );
 
 router.put(
-  "/:id",
-
+  "/:bookId",
   authUser,
-
   authRole(roles.ADMIN),
-
-  validator.params(bookIdSchema),
-
+  validateBookId,
   validator.body(bookUpdateSchema),
-
   bookUpdateController.updateBook
 );
 
 router.delete(
-  "/:id",
-
+  "/:bookId",
   authUser,
-
   authRole(roles.ADMIN),
-
-  validator.params(bookIdSchema),
-
+  validateBookId,
   bookDeletionController.deleteBook
 );
 
