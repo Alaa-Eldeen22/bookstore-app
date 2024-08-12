@@ -1,9 +1,13 @@
 const errorHandler = (err, req, res, next) => {
   console.log("Error", err);
 
-  const statusCode = err.statusCode || 500;
+  if (!err.statusCode) {
+    err.statusCode = 500;
+    err.message = "An error occurred. Please try again later";
+  }
+  const statusCode = err.statusCode;
 
-  const message = err.message || "An error occurred. Please try again later";
+  const message = err.message;
 
   res.status(statusCode).json({ message });
 };
