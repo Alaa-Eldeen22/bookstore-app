@@ -11,7 +11,7 @@ class LoginService {
     try {
       const user = await this.UserModel.findOne({ mail: mail.toLowerCase() });
 
-      if (!user || !(await this.compareSPasswords(password, user.password))) {
+      if (!user || !(await this.comparessPasswords(password, user.password))) {
         const error = new Error(
           "There was a problem logging in. Check your email and password or create an account."
         );

@@ -1,11 +1,11 @@
-class ReviewCreationService {
+class ReviewRetrievalService {
   constructor(ReviewModel) {
     this.ReviewModel = ReviewModel;
   }
 
-  async getReviewsForBook(bookId) {
+  async getAllReviewsForBook(bookId) {
     return await this.ReviewModel.find({ book: bookId });
   }
 }
 
-module.exports = ReviewCreationService;
+module.exports = ReviewRetrievalService;

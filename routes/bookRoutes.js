@@ -5,7 +5,6 @@ const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
-const bookIdSchema = require("../validation/schemas/bookIdSchema");
 const validateBookId = require("../middlewares/validateBookId");
 
 const roles = require("../config/roles");
@@ -16,6 +15,8 @@ const bookDeletionController = di.bookDeletionController;
 const bookUpdateController = di.bookUpdateController;
 
 const reviewCreationController = di.reviewCreationController;
+const reviewRetrievalController = di.reviewRetrievalController;
+
 router.get("/", bookRetrievalController.getAllBooks);
 
 router.get("/:bookId", validateBookId, bookRetrievalController.getBook);
@@ -50,6 +51,12 @@ router.post(
   authUser,
   validateBookId,
   reviewCreationController.addReview
+);
+
+router.get(
+  "/:bookId/reviews",
+  validateBookId,
+  reviewRetrievalController.getAllReviewsForBook
 );
 
 module.exports = router;

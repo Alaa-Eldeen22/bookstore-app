@@ -12,6 +12,7 @@ const BookRetrievalController = require("../controllers/book/BookRetrievalContro
 const BookDeletionController = require("../controllers/book/BookDeletionController");
 const BookUpdateController = require("../controllers/book/BookUpdateController");
 const ReviewCreationController = require("../controllers/review/ReviewCreationConroller");
+const ReviewRetrievalController = require("../controllers/review/ReviewRetrievalController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -20,6 +21,7 @@ const BookRetrievalService = require("../services/book/BookRetrievalService");
 const BookDeletionService = require("../services/book/BookDeletionService");
 const BookUpdateService = require("../services/book/BookUpdateService");
 const ReviewCreationService = require("../services/review/ReviewCreationService");
+const ReviewRetrievalService = require("../services/review/ReviewRetrievalService");
 
 class DIContainer {
   constructor() {
@@ -49,6 +51,8 @@ class DIContainer {
 
       this.reviewCreationService = new ReviewCreationService(Review);
 
+      this.reviewRetrievalService = new ReviewRetrievalService(Review);
+
       // controllers
       this.registerController = new RegisterController(this.registerService);
 
@@ -73,7 +77,11 @@ class DIContainer {
       this.reviewCreationController = new ReviewCreationController(
         this.reviewCreationService
       );
-      
+
+      this.reviewRetrievalController = new ReviewRetrievalController(
+        this.reviewRetrievalService
+      );
+
       DIContainer.instance = this;
     }
 

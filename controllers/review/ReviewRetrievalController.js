@@ -1,14 +1,13 @@
-const ReviewCreationController = require("./ReviewCreationConroller");
-
 class ReviewRetrievalController {
   constructor(reviewRetrievalService) {
     this.reviewRetrievalService = reviewRetrievalService;
+    this.getAllReviewsForBook = this.getAllReviewsForBook.bind(this);
   }
 
   async getAllReviewsForBook(req, res, next) {
     try {
       const reviews = await this.reviewRetrievalService.getAllReviewsForBook(
-        req.parama.bookId
+        req.params.bookId
       );
 
       res.status(200).json({ reviews });
@@ -19,4 +18,4 @@ class ReviewRetrievalController {
   }
 }
 
-module.exports = ReviewCreationController;
+module.exports = ReviewRetrievalController;
