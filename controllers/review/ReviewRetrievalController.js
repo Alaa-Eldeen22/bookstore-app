@@ -7,7 +7,7 @@ class ReviewRetrievalController {
 
   async getAllReviewsForBook(req, res, next) {
     try {
-      const reviews = this.reviewRetrievalService.getAllReviewsForBook(
+      const reviews = await this.reviewRetrievalService.getAllReviewsForBook(
         req.parama.bookId
       );
 
