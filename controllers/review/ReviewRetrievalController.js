@@ -5,9 +5,11 @@ class ReviewRetrievalController {
     this.reviewRetrievalService = reviewRetrievalService;
   }
 
-  async getAllReviews(req, res, next) {
+  async getAllReviewsForBook(req, res, next) {
     try {
-      const reviews = this.reviewRetrievalService(req.parama.bookId);
+      const reviews = this.reviewRetrievalService.getAllReviewsForBook(
+        req.parama.bookId
+      );
 
       res.status(200).json({ reviews });
     } catch (err) {
