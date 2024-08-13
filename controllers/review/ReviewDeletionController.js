@@ -7,13 +7,16 @@ class ReviewDeletionContoller {
   async deleteReview(req, res, next) {
     try {
       const review = await this.reviewDeletionService.deleteReview(
-        req.body.reviewId
+        req.params.bookId,
+        req.user.userId
       );
 
-      res.status(200).json({ message: "Review deleted successfully." }, review);
+      res.status(200).json({ message: "Review deleted successfully." , review});
     } catch (err) {
       console.log("Error deleting review", err);
       next(err);
     }
   }
 }
+
+module.exports = ReviewDeletionContoller;
