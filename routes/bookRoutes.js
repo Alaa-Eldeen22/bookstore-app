@@ -5,6 +5,10 @@ const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
+
+const reviewCreationSchema = require("../validation/schemas/bookCreationValidation");
+const reviewUpdateSchema = require("../validation/schemas/reviewUpdateValidation");
+
 const validateBookId = require("../middlewares/validateBookId");
 const roles = require("../config/roles");
 
@@ -51,6 +55,7 @@ router.post(
   "/:bookId/reviews",
   authUser,
   validateBookId,
+  validator.body(reviewCreationSchema),
   reviewCreationController.addReview
 );
 
@@ -71,6 +76,7 @@ router.put(
   "/:bookId/reviews",
   authUser,
   validateBookId,
+  validator.body(reviewUpdateSchema),
   reviewUpdateController.updateReview
 );
 
