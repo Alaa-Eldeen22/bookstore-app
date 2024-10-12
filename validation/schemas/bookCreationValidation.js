@@ -7,6 +7,7 @@ const bookCreationSchema = Joi.object({
   numberOfPages: Joi.number().integer().min(1).required(),
   description: Joi.string().max(500).optional(),
   price: Joi.number().min(0).required(),
+  quantity: Joi.number().integer().min(0).required(),
   image: Joi.string().default(
     "https://dpi.wi.gov/sites/default/files/imce/acp/images/2020_04_07_acp_academic-icon.png"
   ),

@@ -7,6 +7,7 @@ const bookSchema = new mongoose.Schema({
   numberOfPages: { type: Number },
   description: { type: String },
   price: { type: Number },
+  quantity: {type: Number},
   image: {
     type: String,
     default:
