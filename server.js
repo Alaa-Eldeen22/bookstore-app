@@ -29,9 +29,9 @@ mongoose
     console.log(err);
   });
 
-app.use("/", (req, res) => {
-  res.status(200).json({ message: "API is running" });
-});
+// app.use("/", (req, res) => {
+//   res.status(200).json({ message: "API is running" });
+// });
 
 app.use(errorHandler);
 // app.use((err, req, res, next) => {
