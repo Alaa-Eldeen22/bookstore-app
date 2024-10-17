@@ -55,7 +55,7 @@ class DIContainer {
 
       this.reviewCreationService = new ReviewCreationService(Review);
 
-      this.reviewRetrievalService = new ReviewRetrievalService(Review);
+      this.reviewRetrievalService = new ReviewRetrievalService(Review, User);
 
       this.reviewDeletionService = new ReviewDeletionService(Review);
 

@@ -8,6 +8,7 @@ class BookRetrievalService {
   }
 
   async getBook(bookId) {
+    console.log("id: ", bookId);
     return await this.BookModel.findById(bookId);
   }
 }

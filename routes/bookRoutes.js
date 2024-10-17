@@ -6,7 +6,7 @@ const validator = require("express-joi-validation").createValidator({});
 const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
 
-const reviewCreationSchema = require("../validation/schemas/bookCreationValidation");
+const reviewCreationSchema = require("../validation/schemas/reviewCreationValidation");
 const reviewUpdateSchema = require("../validation/schemas/reviewUpdateValidation");
 
 const validateBookId = require("../middlewares/validateBookId");
