@@ -2,27 +2,28 @@ const Book = require("../models/Book");
 const User = require("../models/User");
 const Review = require("../models/Review");
 const Cart = require("../models/Cart");
+const Wishlist = require("../models/Wishlist");
 
 const passwordUtils = require("../utils/passwordUtils");
 const tokenUtils = require("../utils/tokenUtils");
 
 const RegisterController = require("../controllers/auth/RegisterController");
 const LoginController = require("../controllers/auth/LoginController");
-// book controllers
 const BookCreationController = require("../controllers/book/BookCreationController");
 const BookRetrievalController = require("../controllers/book/BookRetrievalController");
 const BookDeletionController = require("../controllers/book/BookDeletionController");
 const BookUpdateController = require("../controllers/book/BookUpdateController");
-// review controllers
 const ReviewCreationController = require("../controllers/review/ReviewCreationConroller");
 const ReviewRetrievalController = require("../controllers/review/ReviewRetrievalController");
 const ReviewDeletionController = require("../controllers/review/ReviewDeletionController");
 const ReviewUpdateController = require("../controllers/review/ReviewUpdateController");
-// cart controllers
 const CartAddController = require("../controllers/cart/CartAddController");
 const CartRetrievalController = require("../controllers/cart/CartRetrievalController");
 const CartUpdateController = require("../controllers/cart/CartUpdateController");
 const CartDeleteController = require("../controllers/cart/CartDeleteController");
+const WishlistAddController = require("../controllers/wishlist/WishlistAddController");
+const WishlistDeleteController = require("../controllers/wishlist/WishlistDeleteController");
+const WishlistRetrievalController = require("../controllers/wishlist/WishlistRetrievalController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -34,10 +35,13 @@ const ReviewCreationService = require("../services/review/ReviewCreationService"
 const ReviewRetrievalService = require("../services/review/ReviewRetrievalService");
 const ReviewDeletionService = require("../services/review/ReviewDeletionService");
 const ReviewUpdateService = require("../services/review/ReviewUpdateService");
-const CartAddService = require("../services/cart/CartAddService"); // Add cart services
+const CartAddService = require("../services/cart/CartAddService");
 const CartRetrievalService = require("../services/cart/CartRetrievalService");
 const CartUpdateService = require("../services/cart/CartUpdateService");
 const CartDeleteService = require("../services/cart/CartDeleteService");
+const WishlistAddService = require("../services/wishlist/WishlistAddService");
+const WishlistDeleteService = require("../services/wishlist/WishlistDeleteService");
+const WishlistRetrievalService = require("../services/wishlist/WishlistRetrievalService");
 
 class DIContainer {
   constructor() {
@@ -72,6 +76,10 @@ class DIContainer {
       this.cartUpdateService = new CartUpdateService(Cart);
       this.cartDeleteService = new CartDeleteService(Cart);
 
+      this.wishlistAddService = new WishlistAddService(Wishlist);
+      this.wishlistDeleteService = new WishlistDeleteService(Wishlist);
+      this.wishlistRetrievalService = new WishlistRetrievalService(Wishlist);
+
       // Controllers
       this.registerController = new RegisterController(this.registerService);
       this.loginController = new LoginController(this.loginService);
@@ -102,7 +110,7 @@ class DIContainer {
         this.reviewUpdateService
       );
 
-      this.cartAddController = new CartAddController(this.cartAddService); // Cart Add Controller
+      this.cartAddController = new CartAddController(this.cartAddService);
       this.cartRetrievalController = new CartRetrievalController(
         this.cartRetrievalService
       );
@@ -111,6 +119,16 @@ class DIContainer {
       );
       this.cartDeleteController = new CartDeleteController(
         this.cartDeleteService
+      );
+
+      this.wishlistAddController = new WishlistAddController(
+        this.wishlistAddService
+      );
+      this.wishlistDeleteController = new WishlistDeleteController(
+        this.wishlistDeleteService
+      );
+      this.wishlistRetrievalController = new WishlistRetrievalController(
+        this.wishlistRetrievalService
       );
 
       DIContainer.instance = this;

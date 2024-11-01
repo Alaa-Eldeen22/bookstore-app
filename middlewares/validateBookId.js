@@ -3,7 +3,7 @@ const isValidObjectId = require("../utils/isValidObjectId");
 
 const validateBookId = async (req, res, next) => {
   try {
-    const { bookId } = req.params;
+    const { bookId } = req.params || req.body.bookId;
 
     if (!isValidObjectId(bookId)) {
       return res.status(400).json({ message: "Invalid book ID" });

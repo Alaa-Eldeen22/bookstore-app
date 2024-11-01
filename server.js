@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const bookRoutes = require("./routes/bookRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
+
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
@@ -18,6 +20,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 
 app.use("/api/cart", cartRoutes);
+
+app.use("/api/wishlist", wishlistRoutes);
 
 // database connection
 mongoose
