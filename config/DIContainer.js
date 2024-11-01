@@ -1,8 +1,9 @@
 const Book = require("../models/Book");
 const User = require("../models/User");
 const Review = require("../models/Review");
+const Cart = require("../models/Cart");
 
-const passwordUtilss = require("../utils/passwordUtils");
+const passwordUtils = require("../utils/passwordUtils");
 const tokenUtils = require("../utils/tokenUtils");
 
 const RegisterController = require("../controllers/auth/RegisterController");
@@ -15,6 +16,10 @@ const ReviewCreationController = require("../controllers/review/ReviewCreationCo
 const ReviewRetrievalController = require("../controllers/review/ReviewRetrievalController");
 const ReviewDeletionController = require("../controllers/review/ReviewDeletionController");
 const ReviewUpdateController = require("../controllers/review/ReviewUpdateController");
+const CartAddController = require("../controllers/cart/CartAddController"); // Add cart controllers
+const CartRetrievalController = require("../controllers/cart/CartRetrievalController");
+const CartUpdateController = require("../controllers/cart/CartUpdateController");
+const CartDeleteController = require("../controllers/cart/CartDeleteController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -26,58 +31,57 @@ const ReviewCreationService = require("../services/review/ReviewCreationService"
 const ReviewRetrievalService = require("../services/review/ReviewRetrievalService");
 const ReviewDeletionService = require("../services/review/ReviewDeletionService");
 const ReviewUpdateService = require("../services/review/ReviewUpdateService");
+const CartAddService = require("../services/cart/CartAddService"); // Add cart services
+const CartRetrievalService = require("../services/cart/CartRetrievalService");
+const CartUpdateService = require("../services/cart/CartUpdateService");
+const CartDeleteService = require("../services/cart/CartDeleteService");
 
 class DIContainer {
   constructor() {
     if (!DIContainer.instance) {
-      // services
+      // Services
       this.registerService = new RegisterService(
-        passwordUtilss.encryptPassword,
+        passwordUtils.encryptPassword,
         tokenUtils.generateToken,
         User,
         process.env.TOKEN_KEY
       );
 
       this.loginService = new LoginService(
-        passwordUtilss.comparePasswords,
+        passwordUtils.comparePasswords,
         tokenUtils.generateToken,
         User,
         process.env.TOKEN_KEY
       );
 
-      this.bookCreationservice = new BookCreationService(Book);
-
+      this.bookCreationService = new BookCreationService(Book);
       this.bookRetrievalService = new BookRetrievalService(Book);
-
       this.bookDeletionService = new BookDeletionService(Book);
-
       this.bookUpdateService = new BookUpdateService(Book);
 
       this.reviewCreationService = new ReviewCreationService(Review);
-
       this.reviewRetrievalService = new ReviewRetrievalService(Review, User);
-
       this.reviewDeletionService = new ReviewDeletionService(Review);
-
       this.reviewUpdateService = new ReviewUpdateService(Review);
 
-      // controllers
-      this.registerController = new RegisterController(this.registerService);
+      this.cartAddService = new CartAddService(Cart);
+      this.cartRetrievalService = new CartRetrievalService(Cart);
+      this.cartUpdateService = new CartUpdateService(Cart);
+      this.cartDeleteService = new CartDeleteService(Cart);
 
+      // Controllers
+      this.registerController = new RegisterController(this.registerService);
       this.loginController = new LoginController(this.loginService);
 
-      this.bookCreationcontroller = new BookCreationController(
-        this.bookCreationservice
+      this.bookCreationController = new BookCreationController(
+        this.bookCreationService
       );
-
       this.bookRetrievalController = new BookRetrievalController(
         this.bookRetrievalService
       );
-
       this.bookDeletionController = new BookDeletionController(
         this.bookDeletionService
       );
-
       this.bookUpdateController = new BookUpdateController(
         this.bookUpdateService
       );
@@ -85,17 +89,25 @@ class DIContainer {
       this.reviewCreationController = new ReviewCreationController(
         this.reviewCreationService
       );
-
       this.reviewRetrievalController = new ReviewRetrievalController(
         this.reviewRetrievalService
       );
-
       this.reviewDeletionController = new ReviewDeletionController(
         this.reviewDeletionService
       );
-
       this.reviewUpdateController = new ReviewUpdateController(
         this.reviewUpdateService
+      );
+
+      this.cartAddController = new CartAddController(this.cartAddService); // Cart Add Controller
+      this.cartRetrievalController = new CartRetrievalController(
+        this.cartRetrievalService
+      );
+      this.cartUpdateController = new CartUpdateController(
+        this.cartUpdateService
+      );
+      this.cartDeleteController = new CartDeleteController(
+        this.cartDeleteService
       );
 
       DIContainer.instance = this;
@@ -104,6 +116,7 @@ class DIContainer {
     return DIContainer.instance;
   }
 }
+
 const instance = new DIContainer();
 Object.freeze(instance);
 

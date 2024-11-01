@@ -21,3 +21,5 @@ class CartUpdateController {
     }
   }
 }
+
+module.exports = CartUpdateController;

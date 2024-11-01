@@ -31,3 +31,5 @@ class CartUpdateService {
     return cart;
   }
 }
+
+module.exports = CartUpdateService;
