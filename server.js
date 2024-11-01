@@ -4,6 +4,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const bookRoutes = require("./routes/bookRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
@@ -15,6 +16,8 @@ const PORT = process.env.PORT || process.env.API_PORT;
 app.use("/api/auth", authRoutes);
 
 app.use("/api/books", bookRoutes);
+
+app.use("/api/cart", cartRoutes);
 
 // database connection
 mongoose

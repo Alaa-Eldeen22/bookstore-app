@@ -8,15 +8,18 @@ const tokenUtils = require("../utils/tokenUtils");
 
 const RegisterController = require("../controllers/auth/RegisterController");
 const LoginController = require("../controllers/auth/LoginController");
+// book controllers
 const BookCreationController = require("../controllers/book/BookCreationController");
 const BookRetrievalController = require("../controllers/book/BookRetrievalController");
 const BookDeletionController = require("../controllers/book/BookDeletionController");
 const BookUpdateController = require("../controllers/book/BookUpdateController");
+// review controllers
 const ReviewCreationController = require("../controllers/review/ReviewCreationConroller");
 const ReviewRetrievalController = require("../controllers/review/ReviewRetrievalController");
 const ReviewDeletionController = require("../controllers/review/ReviewDeletionController");
 const ReviewUpdateController = require("../controllers/review/ReviewUpdateController");
-const CartAddController = require("../controllers/cart/CartAddController"); // Add cart controllers
+// cart controllers
+const CartAddController = require("../controllers/cart/CartAddController");
 const CartRetrievalController = require("../controllers/cart/CartRetrievalController");
 const CartUpdateController = require("../controllers/cart/CartUpdateController");
 const CartDeleteController = require("../controllers/cart/CartDeleteController");

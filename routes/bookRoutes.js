@@ -12,7 +12,7 @@ const reviewUpdateSchema = require("../validation/schemas/reviewUpdateValidation
 const validateBookId = require("../middlewares/validateBookId");
 const roles = require("../config/roles");
 
-const bookCreationcontroller = di.bookCreationcontroller;
+const bookCreationController = di.bookCreationController;
 const bookRetrievalController = di.bookRetrievalController;
 const bookDeletionController = di.bookDeletionController;
 const bookUpdateController = di.bookUpdateController;
@@ -31,7 +31,7 @@ router.post(
   authUser,
   authRole(roles.ADMIN),
   validator.body(bookCreationSchema),
-  bookCreationcontroller.addBook
+  bookCreationController.addBook
 );
 
 router.put(
