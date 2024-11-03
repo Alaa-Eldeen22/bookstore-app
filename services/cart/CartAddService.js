@@ -14,14 +14,12 @@ class CartAddService {
       if (itemIndex >= 0) {
         cart.items[itemIndex].quantity += itemData.quantity;
       } else {
-        cart.items.push(itemData);
+        cart.items.push({ book: itemData.bookId, quantity: itemData.quantity });
       }
 
       await cart.save();
       return cart;
     } else {
-      console.log("item not in the cart");
-      console.log("Item: ", itemData);
       const newCart = new this.CartModel({
         user: userId,
         items: [{ book: itemData.bookId, quantity: itemData.quantity }],
