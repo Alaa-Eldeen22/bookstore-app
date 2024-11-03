@@ -6,7 +6,7 @@ class CartRetrievalController {
 
   async getCart(req, res, next) {
     try {
-      const cart = this.cartRetrievalService.getCart(req.user.userId);
+      const cart = await this.cartRetrievalService.getCart(req.user.userId);
 
       res.status(200).json({ cart });
     } catch (err) {
