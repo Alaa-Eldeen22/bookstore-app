@@ -20,9 +20,11 @@ class CartAddService {
       await cart.save();
       return cart;
     } else {
+      console.log("item not in the cart");
+      console.log("Item: ", itemData);
       const newCart = new this.CartModel({
         user: userId,
-        items: [itemData],
+        items: [{ book: itemData.bookId, quantity: itemData.quantity }],
       });
 
       await newCart.save();
