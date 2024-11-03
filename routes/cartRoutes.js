@@ -20,7 +20,7 @@ router.post(
 router.get("/", authUser, cartRetrievalController.getCart);
 
 router.put(
-  "/:bookId",
+  "/",
   authUser,
   validateBookId,
   validator.body(cartSchema),
@@ -28,7 +28,7 @@ router.put(
 );
 
 router.delete(
-  "/:bookId",
+  "/",
   authUser,
   validateBookId,
   cartDeleteController.deleteFromCart
