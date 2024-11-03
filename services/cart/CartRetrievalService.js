@@ -4,9 +4,10 @@ class CartRetrievalService {
   }
 
   async getCart(userId) {
-    const cart = await this.CartModel.findOne({ user: userId }).populate(
-      "items.book"
-    );
+    const cart = await this.CartModel.findOne({ user: userId }).populate({
+      path: "items.book",
+      select: "name price image",
+    });
 
     if (!cart) {
       const error = new Error("Cart not found for this user.");
