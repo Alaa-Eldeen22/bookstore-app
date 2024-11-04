@@ -4,11 +4,22 @@ class BookRetrievalService {
   }
 
   async getAllBooks() {
-    return await this.BookModel.find();
+    const books = await this.BookModel.find();
+
+    return books.map((book) => ({
+      bookId: book._id.toString(),
+      name: book.name,
+      category: book.category,
+      authors: book.authors,
+      numberOfPages: book.numberOfPages,
+      description: book.description,
+      price: book.price,
+      quantity: book.quantity,
+      image: book.image,
+    }));
   }
 
   async getBook(bookId) {
-    console.log("id: ", bookId);
     return await this.BookModel.findById(bookId);
   }
 }
