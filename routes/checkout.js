@@ -5,7 +5,6 @@ const DOMAIN = process.env.DOMAIN;
 
 router.post("/create-checkout-session", async (req, res) => {
   const line_items = req.body.cart.map((item) => {
-    console.log(item);
     return {
       price_data: {
         currency: "egp",
@@ -21,23 +20,63 @@ router.post("/create-checkout-session", async (req, res) => {
       quantity: item.quantity,
     };
   });
-  console.log(line_items[0].product_data);
 
   const session = await stripe.checkout.sessions.create({
-    line_items,
-    // : [
+    /////////////////
+    payment_method_types: ["card"],
+    shipping_address_collection: {
+      allowed_countries: ["EG"],
+    },
+    // shipping_options: [
     //   {
-    //     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-    //     price_data: {
-    //       currency: "usd",
-    //       product_data: {
-    //         name: "Design data intensive applications",
+    //     shipping_rate_data: {
+    //       type: "fixed_amount",
+    //       fixed_amount: {
+    //         amount: 0,
+    //         currency: "egp",
     //       },
-    //       unit_amount: 2000,
+    //       display_name: "Free shipping",
+    //       // Delivers between 5-7 business days
+    //       delivery_estimate: {
+    //         minimum: {
+    //           unit: "business_day",
+    //           value: 5,
+    //         },
+    //         maximum: {
+    //           unit: "business_day",
+    //           value: 7,
+    //         },
+    //       },
     //     },
-    //     quantity: 1,
+    //   },
+    //   {
+    //     shipping_rate_data: {
+    //       type: "fixed_amount",
+    //       fixed_amount: {
+    //         amount: 1500,
+    //         currency: "egp",
+    //       },
+    //       display_name: "Next day air",
+    //       // Delivers in exactly 1 business day
+    //       delivery_estimate: {
+    //         minimum: {
+    //           unit: "business_day",
+    //           value: 1,
+    //         },
+    //         maximum: {
+    //           unit: "business_day",
+    //           value: 1,
+    //         },
+    //       },
+    //     },
     //   },
     // ],
+    phone_number_collection: {
+      enabled: true,
+    },
+    //////////////
+    line_items,
+
     mode: "payment",
     success_url: `${DOMAIN}/checkout-success`,
     cancel_url: `${DOMAIN}/cart`, // To be modified

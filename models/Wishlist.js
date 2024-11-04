@@ -8,11 +8,9 @@ const wishlistSchema = new mongoose.Schema({
   },
   items: [
     {
-      book: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Book",
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Book",
+      required: true,
     },
   ],
 });

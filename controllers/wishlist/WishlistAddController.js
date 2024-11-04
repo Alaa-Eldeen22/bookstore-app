@@ -13,7 +13,7 @@ class WishlistAddController {
 
       res.status(201).json({ message: "Book added to wishlist", wishlist });
     } catch (err) {
-      console.error("Error adding book to wishlist:", err);
+      console.error("Error adding book to wishlist");
       next(err);
     }
   }

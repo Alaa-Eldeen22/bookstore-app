@@ -14,7 +14,7 @@ class WishlistRetrievalService {
       throw error;
     }
 
-    return wishlist;
+    return wishlist.items;
   }
 }
 

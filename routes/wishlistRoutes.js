@@ -20,7 +20,7 @@ router.post(
 router.get("/", authUser, wishlistRetrievalController.getWishlist);
 
 router.delete(
-  "/:bookId",
+  "/",
   authUser,
   validateBookId,
   wishlistDeleteController.deleteFromWishlist

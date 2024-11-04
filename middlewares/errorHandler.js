@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-  console.log("Error", err);
+  console.log(err.message);
 
   if (!err.statusCode) {
     err.statusCode = 500;
@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode;
 
   const message = err.message;
-
+  
   res.status(statusCode).json({ message });
 };
 
