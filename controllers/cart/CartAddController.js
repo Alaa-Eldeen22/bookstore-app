@@ -6,11 +6,9 @@ class CartAddController {
 
   async addToCart(req, res, next) {
     try {
-      const cart = await this.cartAddService.addToCart(
-        req.user.userId,
-        req.body
-      );
-      res.status(200).json({ message: "Item added successfully", cart });
+      await this.cartAddService.addToCart(req.user.userId, req.body);
+      
+      res.status(200).json({ message: "Item added successfully" });
     } catch (err) {
       console.log("Error adding item to cart", err);
       next(err);

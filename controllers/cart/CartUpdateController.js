@@ -6,14 +6,10 @@ class CartUpdateController {
 
   async updateCart(req, res, next) {
     try {
-      const cart = await this.cartUpdateService.updateCart(
-        req.user.userId,
-        req.body
-      );
+      await this.cartUpdateService.updateCart(req.user.userId, req.body);
 
       res.status(200).json({
         message: "Cart updated successfully",
-        cart,
       });
     } catch (err) {
       console.log("Error updating cart", err);
