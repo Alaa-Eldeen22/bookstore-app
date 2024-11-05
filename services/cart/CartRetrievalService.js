@@ -20,6 +20,7 @@ class CartRetrievalService {
     return cart.items.map((item) => ({
       bookId: item.book._id,
       ...item.book,
+      quantity: item.quantity,
       _id: undefined,
     }));
   }
