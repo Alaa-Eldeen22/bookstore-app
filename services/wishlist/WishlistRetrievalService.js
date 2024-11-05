@@ -6,7 +6,13 @@ class WishlistRetrievalService {
   async getWishlist(userId) {
     const wishlist = await this.WishlistModel.findOne({
       user: userId,
-    }).populate("items.book");
+    })
+      .populate({
+        path: "items",
+        model: "Book",
+        select: "name price image",
+      })
+      .lean();
 
     if (!wishlist) {
       const error = new Error("Wishlist not found for this user.");
@@ -14,7 +20,11 @@ class WishlistRetrievalService {
       throw error;
     }
 
-    return wishlist.items;
+    return wishlist.items.map((item) => ({
+      bookId: item._id,
+      ...item,
+      _id: undefined,
+    }));
   }
 }
 
