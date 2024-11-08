@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const ngrok = require("@ngrok/ngrok");
+
 require("dotenv").config();
 const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 const bookRoutes = require("./routes/bookRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const paymentRoutes = require("./routes/checkout");
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -13,7 +16,9 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
 const PORT = process.env.PORT || process.env.API_PORT;
+const NGROK_AUTHTOKEN = process.env.NGROK_AUTHTOKEN;
 
 app.use("/api/auth", authRoutes);
 
@@ -23,15 +28,24 @@ app.use("/api/cart", cartRoutes);
 
 app.use("/api/wishlist", wishlistRoutes);
 
+app.use("/api/orders", orderRoutes);
+
 app.use("/api/stripe", paymentRoutes);
-
-
+app.use("/webhook", (req, res, next) => {
+  console.log("You know that ");
+  res.send("ok");
+});
 // database connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(PORT, () => {
+    app.listen(PORT, async () => {
       console.log(`server running on port ${PORT}`);
+      const listener = await ngrok.connect({
+        addr: PORT,
+        authtoken: NGROK_AUTHTOKEN,
+      });
+      console.log(`Ngrok tunnel established at: ${listener.url()}`);
     });
   })
   .catch((err) => {

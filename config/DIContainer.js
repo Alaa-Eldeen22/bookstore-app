@@ -3,6 +3,7 @@ const User = require("../models/User");
 const Review = require("../models/Review");
 const Cart = require("../models/Cart");
 const Wishlist = require("../models/Wishlist");
+const Order = require("../models/Order");
 
 const passwordUtils = require("../utils/passwordUtils");
 const tokenUtils = require("../utils/tokenUtils");
@@ -24,6 +25,8 @@ const CartDeleteController = require("../controllers/cart/CartDeleteController")
 const WishlistAddController = require("../controllers/wishlist/WishlistAddController");
 const WishlistDeleteController = require("../controllers/wishlist/WishlistDeleteController");
 const WishlistRetrievalController = require("../controllers/wishlist/WishlistRetrievalController");
+const CashOnDeliveryController = require("../controllers/order/CashOnDeliveryController");
+const CreditCardOrderController = require("../controllers/order/CreditCardOrderController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -42,6 +45,8 @@ const CartDeleteService = require("../services/cart/CartDeleteService");
 const WishlistAddService = require("../services/wishlist/WishlistAddService");
 const WishlistDeleteService = require("../services/wishlist/WishlistDeleteService");
 const WishlistRetrievalService = require("../services/wishlist/WishlistRetrievalService");
+const OrderPlaceService = require("../services/order/OrderPlaceService");
+const PaymentService = require("../services/order/PaymentService");
 
 class DIContainer {
   constructor() {
@@ -80,6 +85,8 @@ class DIContainer {
       this.wishlistDeleteService = new WishlistDeleteService(Wishlist);
       this.wishlistRetrievalService = new WishlistRetrievalService(Wishlist);
 
+      this.orderPlaceService = new OrderPlaceService(Order);
+      this.paymentService = new PaymentService();
       // Controllers
       this.registerController = new RegisterController(this.registerService);
       this.loginController = new LoginController(this.loginService);
@@ -129,6 +136,14 @@ class DIContainer {
       );
       this.wishlistRetrievalController = new WishlistRetrievalController(
         this.wishlistRetrievalService
+      );
+      this.cashOnDeliveryController = new CashOnDeliveryController(
+        this.orderPlaceService
+      );
+
+      this.creditCardOrderController = new CreditCardOrderController(
+        this.orderPlaceService,
+        this.paymentService
       );
 
       DIContainer.instance = this;
