@@ -31,9 +31,8 @@ class PlaceOrderService {
     });
 
     await order.save();
-
     return {
-      orderId: order._id,
+      orderId: order._id.toString(),
       totalAmount: order.totalAmount,
     };
   }

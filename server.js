@@ -9,7 +9,6 @@ const bookRoutes = require("./routes/bookRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const orderRoutes = require("./routes/orderRoutes");
-const paymentRoutes = require("./routes/checkout");
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
@@ -30,22 +29,17 @@ app.use("/api/wishlist", wishlistRoutes);
 
 app.use("/api/orders", orderRoutes);
 
-app.use("/api/stripe", paymentRoutes);
-app.use("/webhook", (req, res, next) => {
-  console.log("You know that ");
-  res.send("ok");
-});
 // database connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(PORT, async () => {
+    app.listen(PORT, () => {
       console.log(`server running on port ${PORT}`);
-      const listener = await ngrok.connect({
-        addr: PORT,
-        authtoken: NGROK_AUTHTOKEN,
-      });
-      console.log(`Ngrok tunnel established at: ${listener.url()}`);
+      // const listener = await ngrok.connect({
+      //   addr: PORT,
+      //   authtoken: NGROK_AUTHTOKEN,
+      // });
+      // console.log(`Ngrok tunnel established at: ${listener.url()}`);
     });
   })
   .catch((err) => {

@@ -34,12 +34,11 @@ const validateCartItems = async (req, res, next) => {
         price: book.price,
       });
     }
-
+    
     const totalAmount = populatedCart.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
-
     req.cart = populatedCart;
     req.totalAmount = totalAmount;
 

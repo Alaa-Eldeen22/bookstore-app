@@ -27,6 +27,7 @@ const WishlistDeleteController = require("../controllers/wishlist/WishlistDelete
 const WishlistRetrievalController = require("../controllers/wishlist/WishlistRetrievalController");
 const CashOnDeliveryController = require("../controllers/order/CashOnDeliveryController");
 const CreditCardOrderController = require("../controllers/order/CreditCardOrderController");
+const OrderConfirmController = require("../controllers/order/OrderConfirmController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -47,6 +48,7 @@ const WishlistDeleteService = require("../services/wishlist/WishlistDeleteServic
 const WishlistRetrievalService = require("../services/wishlist/WishlistRetrievalService");
 const OrderPlaceService = require("../services/order/OrderPlaceService");
 const PaymentService = require("../services/order/PaymentService");
+const OrderConfirmService = require("../services/order/OrderConfirmService");
 
 class DIContainer {
   constructor() {
@@ -87,6 +89,8 @@ class DIContainer {
 
       this.orderPlaceService = new OrderPlaceService(Order);
       this.paymentService = new PaymentService();
+      this.orderConfirmService = new OrderConfirmService(Order);
+
       // Controllers
       this.registerController = new RegisterController(this.registerService);
       this.loginController = new LoginController(this.loginService);
@@ -145,7 +149,9 @@ class DIContainer {
         this.orderPlaceService,
         this.paymentService
       );
-
+      this.orderConfirmController = new OrderConfirmController(
+        this.orderConfirmService
+      );
       DIContainer.instance = this;
     }
 

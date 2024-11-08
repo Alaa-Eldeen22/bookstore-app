@@ -22,7 +22,7 @@ class CreditCardOrderController {
 
       // Step 2: Call payment service to initialize Stripe checkout session
       const sessionUrl = await this.paymentService.createStripeSession(
-        order._id,
+        order.orderId,
         order.totalAmount
       );
 

@@ -22,7 +22,7 @@ class PaymentService {
       mode: "payment",
       success_url: `${DOMAIN}/checkout-success`,
       cancel_url: `${DOMAIN}/cart`,
-      metadata: { orderId }, 
+      metadata: { orderId: orderId },
     });
 
     return session.url;
