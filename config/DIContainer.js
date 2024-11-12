@@ -28,6 +28,7 @@ const WishlistRetrievalController = require("../controllers/wishlist/WishlistRet
 const CashOnDeliveryController = require("../controllers/order/CashOnDeliveryController");
 const CreditCardOrderController = require("../controllers/order/CreditCardOrderController");
 const OrderConfirmController = require("../controllers/order/OrderConfirmController");
+const OrderRetrievalController = require("../controllers/order/OrderRetrievalController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -48,7 +49,8 @@ const WishlistDeleteService = require("../services/wishlist/WishlistDeleteServic
 const WishlistRetrievalService = require("../services/wishlist/WishlistRetrievalService");
 const OrderPlaceService = require("../services/order/OrderPlaceService");
 const PaymentService = require("../services/order/PaymentService");
-const OrderConfirmService = require("../services/order/OrderConfirmService");
+const OrderStatusUpdateService = require("../services/order/OrderStatusUpdateService");
+const OrderRetrievalService = require("../services/order/OrderRetrievalService");
 
 class DIContainer {
   constructor() {
@@ -89,7 +91,8 @@ class DIContainer {
 
       this.orderPlaceService = new OrderPlaceService(Order);
       this.paymentService = new PaymentService();
-      this.orderConfirmService = new OrderConfirmService(Order);
+      this.orderStatusUpdateService = new OrderStatusUpdateService(Order);
+      this.orderRetrievalService = new OrderRetrievalService(Order);
 
       // Controllers
       this.registerController = new RegisterController(this.registerService);
@@ -150,8 +153,13 @@ class DIContainer {
         this.paymentService
       );
       this.orderConfirmController = new OrderConfirmController(
-        this.orderConfirmService
+        this.orderStatusUpdateService
       );
+
+      this.orderRetrievalController = new OrderRetrievalController(
+        this.orderRetrievalService
+      );
+
       DIContainer.instance = this;
     }
 
