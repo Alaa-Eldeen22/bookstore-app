@@ -3,7 +3,7 @@ class OrderStatusUpdateService {
     this.OrderModel = OrderModel;
   }
 
-  async confirmOrder(orderId, statusUpdates) {
+  async updateOrder(orderId, statusUpdates) {
     const order = await this.OrderModel.findById(orderId);
     if (!order) {
       const error = new Error("There is no order with such ID");

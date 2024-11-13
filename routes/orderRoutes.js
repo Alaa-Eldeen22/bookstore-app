@@ -6,6 +6,8 @@ require("dotenv").config();
 const express = require("express");
 const validator = require("express-joi-validation").createValidator({});
 const orderSchema = require("../validation/schemas/orderValidation");
+const orderUpdateSchema = require("../validation/schemas/orderUpdateValication");
+
 const prepareCartData = require("../middlewares/prepareCartData");
 const di = require("../config/DIContainer");
 const roles = require("../config/roles");
@@ -14,7 +16,7 @@ const cashOnDeliveryController = di.cashOnDeliveryController;
 const creditCardOrderController = di.creditCardOrderController;
 const orderConfirmController = di.orderConfirmController;
 const orderRetrievalController = di.orderRetrievalController;
-
+const orderUpdateController = di.orderUpdateController;
 router.post(
   "/cash-on-delivery",
   authUser,
@@ -38,5 +40,13 @@ router.get(
   authUser,
   authRole(roles.ADMIN),
   orderRetrievalController.getOrders
+);
+
+router.put(
+  "/:orderId",
+  authUser,
+  authRole(roles.ADMIN),
+  validator.body(orderUpdateSchema),
+  orderUpdateController.updateOrder
 );
 module.exports = router;

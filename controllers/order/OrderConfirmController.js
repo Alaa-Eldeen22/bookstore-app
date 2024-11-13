@@ -8,7 +8,7 @@ class OrderConfirmController {
     try {
       const orderData = req.body;
       if (orderData.eventType === "checkout.session.completed") {
-        await this.orderStatusUpdateService.confirmOrder(orderData.orderId, {
+        await this.orderStatusUpdateService.UpdateOrder(orderData.orderId, {
           paymentStatus: "paid",
         });
       } else {

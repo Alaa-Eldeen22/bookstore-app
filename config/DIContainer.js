@@ -29,6 +29,7 @@ const CashOnDeliveryController = require("../controllers/order/CashOnDeliveryCon
 const CreditCardOrderController = require("../controllers/order/CreditCardOrderController");
 const OrderConfirmController = require("../controllers/order/OrderConfirmController");
 const OrderRetrievalController = require("../controllers/order/OrderRetrievalController");
+const OrderUpdateController = require("../controllers/order/OrderUpdateController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -160,6 +161,9 @@ class DIContainer {
         this.orderRetrievalService
       );
 
+      this.orderUpdateController = new OrderUpdateController(
+        this.orderStatusUpdateService
+      );
       DIContainer.instance = this;
     }
 
