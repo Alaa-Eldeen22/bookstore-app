@@ -30,6 +30,7 @@ const CreditCardOrderController = require("../controllers/order/CreditCardOrderC
 const OrderConfirmController = require("../controllers/order/OrderConfirmController");
 const OrderRetrievalController = require("../controllers/order/OrderRetrievalController");
 const OrderUpdateController = require("../controllers/order/OrderUpdateController");
+const SearchByTitleController = require("../controllers/book/SearchByTitleController");
 
 const RegisterService = require("../services/auth/RegisterService");
 const LoginService = require("../services/auth/LoginService");
@@ -52,6 +53,7 @@ const OrderPlaceService = require("../services/order/OrderPlaceService");
 const PaymentService = require("../services/order/PaymentService");
 const OrderStatusUpdateService = require("../services/order/OrderStatusUpdateService");
 const OrderRetrievalService = require("../services/order/OrderRetrievalService");
+const SearchByTitleService = require("../services/book/SearchByTitleService");
 
 class DIContainer {
   constructor() {
@@ -94,6 +96,8 @@ class DIContainer {
       this.paymentService = new PaymentService();
       this.orderStatusUpdateService = new OrderStatusUpdateService(Order);
       this.orderRetrievalService = new OrderRetrievalService(Order);
+
+      this.searchByTitleService = new SearchByTitleService(Book);
 
       // Controllers
       this.registerController = new RegisterController(this.registerService);
@@ -164,6 +168,11 @@ class DIContainer {
       this.orderUpdateController = new OrderUpdateController(
         this.orderStatusUpdateService
       );
+
+      this.searchByTitleController = new SearchByTitleController(
+        this.searchByTitleService
+      );
+
       DIContainer.instance = this;
     }
 

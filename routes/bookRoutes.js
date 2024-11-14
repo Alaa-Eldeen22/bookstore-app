@@ -22,6 +22,8 @@ const reviewRetrievalController = di.reviewRetrievalController;
 const reviewDeletionController = di.reviewDeletionController;
 const reviewUpdateController = di.reviewUpdateController;
 
+const searchByTitleController = di.searchByTitleController;
+
 router.get("/", bookRetrievalController.getAllBooks);
 
 router.get("/:bookId", validateBookId, bookRetrievalController.getBook);
@@ -79,5 +81,7 @@ router.put(
   validator.body(reviewUpdateSchema),
   reviewUpdateController.updateReview
 );
+
+router.get("/search", searchByTitleController.searchByTitle);
 
 module.exports = router;
