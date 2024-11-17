@@ -24,10 +24,6 @@ const reviewUpdateController = di.reviewUpdateController;
 
 const searchByTitleController = di.searchByTitleController;
 
-router.get("/", bookRetrievalController.getAllBooks);
-
-router.get("/:bookId", validateBookId, bookRetrievalController.getBook);
-
 router.post(
   "/",
   authUser,
@@ -83,5 +79,9 @@ router.put(
 );
 
 router.get("/search", searchByTitleController.searchByTitle);
+
+router.get("/", bookRetrievalController.getAllBooks);
+
+router.get("/:bookId", validateBookId, bookRetrievalController.getBook);
 
 module.exports = router;
