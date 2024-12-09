@@ -10,7 +10,7 @@ class CartRetrievalController {
 
       res.status(200).json({ cart });
     } catch (err) {
-      console.log("Error fetching cart", book);
+      console.log("Error fetching cart", err);
       next(err);
     }
   }
