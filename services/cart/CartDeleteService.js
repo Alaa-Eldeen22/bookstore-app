@@ -3,7 +3,7 @@ class CartDeleteService {
     this.CartModel = CartModel;
   }
 
-  async deleteFromCart(userId, {bookId}) {
+  async deleteFromCart(userId, { bookId }) {
     const cart = await this.CartModel.findOne({ user: userId });
 
     if (!cart) {
@@ -17,7 +17,8 @@ class CartDeleteService {
     );
 
     if (itemIndex >= 0) {
-      cart.items.splice(itemIndex, 1);
+      // cart.items.splice(itemIndex, 1);
+      cart.items[itemIndex].quantity = itemData.quantity;
 
       await cart.save();
       return cart;
