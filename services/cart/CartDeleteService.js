@@ -17,9 +17,7 @@ class CartDeleteService {
     );
 
     if (itemIndex >= 0) {
-      // cart.items.splice(itemIndex, 1);
-      cart.items[itemIndex].quantity = itemData.quantity;
-
+      cart.items.splice(itemIndex, 1);
       await cart.save();
       return cart;
     } else {
