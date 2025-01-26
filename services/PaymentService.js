@@ -1,7 +1,8 @@
-const stripe = require("stripe")(process.env.STRIPE_KEY);
-const DOMAIN = process.env.DOMAIN;
-
 class PaymentService {
+  constructor(stripe, DOMAIN) {
+    this.stripe = stripe;
+    this.DOMAIN = DOMAIN;
+  }
   async createStripeSession(orderId, totalAmount) {
     const line_items = [
       {

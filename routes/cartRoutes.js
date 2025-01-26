@@ -1,37 +1,36 @@
+const express = require("express");
 const authUser = require("../middlewares/authUser");
-const cartSchema = require("../validation/schemas/cartValidation");
-const router = require("express").Router();
-const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const validateBookId = require("../middlewares/validateBookId");
+const cartSchema = require("../validation/schemas/cartValidation");
 
-const cartAddController = di.cartAddController;
-const cartRetrievalController = di.cartRetrievalController;
-const cartUpdateController = di.cartUpdateController;
-const cartDeleteController = di.cartDeleteController;
+const di = require("../config/DIContainer");
 
+const cartController = di.cartController;
+
+const router = express.Router();
+
+// Add a book to the cart (Authenticated Users)
 router.post(
   "/",
   authUser,
   validator.body(cartSchema),
-  cartAddController.addToCart
+  cartController.addToCart
 );
 
-router.get("/", authUser, cartRetrievalController.getCart);
+// Get the user's cart (Authenticated Users)
+router.get("/", authUser, cartController.getCart);
 
+// Update a book's quantity in the cart (Authenticated Users)
 router.put(
   "/",
   authUser,
   validateBookId,
   validator.body(cartSchema),
-  cartUpdateController.updateCart
+  cartController.updateCart
 );
 
-router.delete(
-  "/",
-  authUser,
-  validateBookId,
-  cartDeleteController.deleteFromCart
-);
+// Remove a book from the cart (Authenticated Users)
+router.delete("/", authUser, validateBookId, cartController.deleteFromCart);
 
 module.exports = router;

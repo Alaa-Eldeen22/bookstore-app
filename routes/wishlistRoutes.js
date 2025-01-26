@@ -1,29 +1,37 @@
+const express = require("express");
 const authUser = require("../middlewares/authUser");
-const wishlistAddSchema = require("../validation/schemas/wishlistAddValidation");
-const router = require("express").Router();
-const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
 const validateBookId = require("../middlewares/validateBookId");
 
-const wishlistAddController = di.wishlistAddController;
-const wishlistRetrievalController = di.wishlistRetrievalController;
-const wishlistDeleteController = di.wishlistDeleteController;
+const di = require("../config/DIContainer");
+const WishlistController = require("../controllers/WishlistController");
 
+const wishlistController = new WishlistController(di.wishlistService);
+
+const router = express.Router();
+
+/**
+ * Wishlist Routes
+ */
+
+// Add a book to the wishlist (Authenticated Users)
 router.post(
   "/",
   authUser,
   validateBookId,
-  validator.body(wishlistAddSchema),
-  wishlistAddController.addToWishlist
+  validator.body(di.wishlistAddValidationSchema),
+  wishlistController.addToWishlist
 );
 
-router.get("/", authUser, wishlistRetrievalController.getWishlist);
+// Get the user's wishlist (Authenticated Users)
+router.get("/", authUser, wishlistController.getWishlist);
 
+// Remove a book from the wishlist (Authenticated Users)
 router.delete(
   "/",
   authUser,
   validateBookId,
-  wishlistDeleteController.deleteFromWishlist
+  wishlistController.deleteFromWishlist
 );
 
 module.exports = router;

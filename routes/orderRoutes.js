@@ -1,52 +1,46 @@
+const router = require("express").Router();
 const authUser = require("../middlewares/authUser");
 const authRole = require("../middlewares/authRole");
-const router = require("express").Router();
-const stripe = require("stripe")(process.env.STRIPE_KEY);
-require("dotenv").config();
-const express = require("express");
 const validator = require("express-joi-validation").createValidator({});
+const validateBookId = require("../middlewares/validateBookId");
 const orderSchema = require("../validation/schemas/orderValidation");
-const orderUpdateSchema = require("../validation/schemas/orderUpdateValication");
-
 const prepareCartData = require("../middlewares/prepareCartData");
-const di = require("../config/DIContainer");
 const roles = require("../config/roles");
 
-const cashOnDeliveryController = di.cashOnDeliveryController;
-const creditCardOrderController = di.creditCardOrderController;
-const orderConfirmController = di.orderConfirmController;
-const orderRetrievalController = di.orderRetrievalController;
-const orderUpdateController = di.orderUpdateController;
+const di = require("../config/DIContainer");
+const orderController = di.orderController;
+
+// Place a cash-on-delivery order (Authenticated Users)
 router.post(
   "/cash-on-delivery",
   authUser,
   validator.body(orderSchema),
   prepareCartData,
-  cashOnDeliveryController.placeOrder
+  orderController.placeCashOnDeliveryOrder
 );
 
+// Place a credit card order (Authenticated Users)
 router.post(
   "/credit-card",
   authUser,
   validator.body(orderSchema),
   prepareCartData,
-  creditCardOrderController.placeOrder
+  orderController.placeCreditCardOrder
 );
 
-router.post("/confirm-order", orderConfirmController.confirmOrder);
+// Confirm an order (Webhook)
+router.post("/confirm-order", orderController.confirmOrder);
 
-router.get(
-  "/",
-  authUser,
-  authRole(roles.ADMIN),
-  orderRetrievalController.getOrders
-);
+// Retrieve all orders (Admin Only)
+router.get("/", authUser, authRole(roles.ADMIN), orderController.getOrders);
 
+// Update an order's status (Admin Only)
 router.put(
   "/:orderId",
   authUser,
   authRole(roles.ADMIN),
   validator.body(orderUpdateSchema),
-  orderUpdateController.updateOrder
+  orderController.updateOrder
 );
+
 module.exports = router;

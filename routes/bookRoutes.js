@@ -1,87 +1,52 @@
+const express = require("express");
 const authUser = require("../middlewares/authUser");
 const authRole = require("../middlewares/authRole");
-const router = require("express").Router();
-const di = require("../config/DIContainer");
 const validator = require("express-joi-validation").createValidator({});
+const validateBookId = require("../middlewares/validateBookId");
+const roles = require("../config/roles");
 const bookCreationSchema = require("../validation/schemas/bookCreationValidation");
 const bookUpdateSchema = require("../validation/schemas/bookUpdtateValidation");
 
-const reviewCreationSchema = require("../validation/schemas/reviewCreationValidation");
-const reviewUpdateSchema = require("../validation/schemas/reviewUpdateValidation");
+const reviewValidationSchema = require("../validation/schemas/reviewValidation");
+const di = require("../config/DIContainer");
 
-const validateBookId = require("../middlewares/validateBookId");
-const roles = require("../config/roles");
+const router = express.Router();
 
-const bookCreationController = di.bookCreationController;
-const bookRetrievalController = di.bookRetrievalController;
-const bookDeletionController = di.bookDeletionController;
-const bookUpdateController = di.bookUpdateController;
+const bookController = di.bookController;
 
-const reviewCreationController = di.reviewCreationController;
-const reviewRetrievalController = di.reviewRetrievalController;
-const reviewDeletionController = di.reviewDeletionController;
-const reviewUpdateController = di.reviewUpdateController;
-
-const searchByTitleController = di.searchByTitleController;
-
+// Create a new book
 router.post(
   "/",
   authUser,
-  authRole(roles.ADMIN),
+  authRole(roles.ADMIN), // Restrict to admins
   validator.body(bookCreationSchema),
-  bookCreationController.addBook
+  bookController.addBook
 );
 
+// Retrieve all books
+router.get("/", bookController.getAllBooks);
+
+// Retrieve a single book by ID
+router.get("/:bookId", validateBookId, bookController.getBook);
+
+// Update a book by ID
 router.put(
   "/:bookId",
   authUser,
-  authRole(roles.ADMIN),
-  validateBookId,
+  authRole(roles.ADMIN), // Restrict to admins
   validator.body(bookUpdateSchema),
-  bookUpdateController.updateBook
+  bookController.updateBook
 );
 
+// Delete a book by ID
 router.delete(
   "/:bookId",
   authUser,
-  authRole(roles.ADMIN),
-  validateBookId,
-  bookDeletionController.deleteBook
+  authRole(roles.ADMIN), // Restrict to admins
+  bookController.deleteBook
 );
 
-router.post(
-  "/:bookId/reviews",
-  authUser,
-  validateBookId,
-  validator.body(reviewCreationSchema),
-  reviewCreationController.addReview
-);
-
-router.get(
-  "/:bookId/reviews",
-  validateBookId,
-  reviewRetrievalController.getAllReviewsForBook
-);
-
-router.delete(
-  "/:bookId/reviews",
-  authUser,
-  validateBookId,
-  reviewDeletionController.deleteReview
-);
-
-router.put(
-  "/:bookId/reviews",
-  authUser,
-  validateBookId,
-  validator.body(reviewUpdateSchema),
-  reviewUpdateController.updateReview
-);
-
-router.get("/search", searchByTitleController.searchByTitle);
-
-router.get("/", bookRetrievalController.getAllBooks);
-
-router.get("/:bookId", validateBookId, bookRetrievalController.getBook);
+// Search books by title
+router.get("/search", bookController.searchByTitle);
 
 module.exports = router;

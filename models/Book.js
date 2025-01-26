@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema({
-  name: { type: String },
+  title: { type: String },
   category: { type: String },
-  authors: { type: String },
+  authors: { type: [String] },
   numberOfPages: { type: Number },
   description: { type: String },
   price: { type: Number },
-  quantity: {type: Number},
+  quantity: { type: Number },
   image: {
     type: String,
     default:
