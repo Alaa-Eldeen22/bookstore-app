@@ -1,15 +1,15 @@
-const authRole = (role) => {
-  return (req, res, next) => {
-    if (req.user.role !== role) {
-      return res
-        .status(403)
-        .send(
-          "Access denied. You do not have permission to perform this action."
-        );
-    }
+const errorHandler = (err, req, res, next) => {
+  console.log(err.message);
 
-    next();
-  };
+  if (!err.statusCode) {
+    err.statusCode = 500;
+    err.message = "An error occurred. Please try again later";
+  }
+  const statusCode = err.statusCode;
+
+  const message = err.message;
+
+  res.status(statusCode).json({ message });
 };
 
-module.exports = authRole;
+module.exports = errorHandler;

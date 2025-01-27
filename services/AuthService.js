@@ -1,33 +1,36 @@
-const UserModel = require("../models/User");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("../config/config");
-
 class AuthService {
-  constructor() {
+  /**
+   * Handles business logic for authentication operations.
+   * @param {Model} UserModel - Mongoose model for User.
+   * @param {object} passwordUtils - Utility functions for password encryption and comparison.
+   * @param {object} tokenUtils - Utility functions for generating and verifying JWT tokens.
+   */
+  constructor(UserModel, passwordUtils, tokenUtils) {
     this.UserModel = UserModel;
-    this.tokenKey = config.JWT_SECRET; // Use your secret key from config
+    this.passwordUtils = passwordUtils;
+    this.tokenUtils = tokenUtils;
   }
 
   /**
-   * Logs in a user by verifying their credentials.
-   * @param {Object} credentials - The user's login credentials.
-   * @param {string} credentials.mail - The user's email.
-   * @param {string} credentials.password - The user's password.
-   * @returns {Object} The user's details, including a token.
-   * @throws {Error} If the email or password is invalid.
+   * Login a user by verifying credentials and returning a JWT token.
+   * @param {object} credentials - User credentials (email and password).
+   * @returns {object} - User details and JWT token.
+   * @throws {Error} - If login fails due to invalid credentials.
    */
   async login({ mail, password }) {
     const user = await this.UserModel.findOne({ mail: mail.toLowerCase() });
-
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      const error = new Error("Invalid email or password. Please try again.");
+    if (
+      !user ||
+      !(await this.passwordUtils.comparePasswords(password, user.password))
+    ) {
+      const error = new Error(
+        "There was a problem logging in. Check your email and password or create an account."
+      );
       error.statusCode = 401;
       throw error;
     }
 
-    const token = this.generateToken(user);
-
+    const token = this.tokenUtils.generateToken(user);
     return {
       id: user._id,
       token,
@@ -36,55 +39,35 @@ class AuthService {
   }
 
   /**
-   * Registers a new user and returns their details with a token.
-   * @param {Object} userData - The user's registration details.
-   * @param {string} userData.firstname - The user's first name.
-   * @param {string} userData.lastname - The user's last name.
-   * @param {string} userData.mail - The user's email.
-   * @param {string} userData.password - The user's password.
-   * @param {string} [userData.role="user"] - The user's role.
-   * @returns {Object} The newly registered user's details, including a token.
-   * @throws {Error} If the email is already in use.
+   * Register a new user by saving their data to the database and returning a JWT token.
+   * @param {object} userData - User data (name, email, password).
+   * @returns {object} - Newly created user details and JWT token.
+   * @throws {Error} - If the email is already registered.
    */
-  async register({ firstname, lastname, mail, password, role = "user" }) {
+  async register({ firstname, lastname, mail, password }) {
     const userExist = await this.UserModel.exists({ mail: mail.toLowerCase() });
-
     if (userExist) {
-      const error = new Error("Email already in use.");
+      const error = new Error("Email already used");
       error.statusCode = 409;
       throw error;
     }
 
-    const encryptedPassword = await bcrypt.hash(password, 10);
-
+    const encryptedPassword = await this.passwordUtils.encryptPassword(
+      password
+    );
     const user = await this.UserModel.create({
       firstname,
       lastname,
       mail: mail.toLowerCase(),
       password: encryptedPassword,
-      role,
     });
 
-    const token = this.generateToken(user);
-
+    const token = this.tokenUtils.generateToken(user);
     return {
       id: user._id,
       token,
       role: user.role,
     };
-  }
-
-  /**
-   * Generates a JWT token for a user.
-   * @param {Object} user - The user object.
-   * @returns {string} The JWT token.
-   */
-  generateToken(user) {
-    return jwt.sign(
-      { id: user._id, role: user.role },
-      this.tokenKey,
-      { expiresIn: "7d" } // Token valid for 7 days
-    );
   }
 }
 

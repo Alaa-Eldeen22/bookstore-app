@@ -28,14 +28,7 @@ const PaymentService = require("../services/PaymentService");
 class DIContainer {
   constructor() {
     if (!DIContainer.instance) {
-      // Services
-      this.authService = new AuthService(
-        passwordUtils.encryptPassword,
-        passwordUtils.comparePasswords,
-        tokenUtils.generateToken,
-        User,
-        process.env.TOKEN_KEY
-      );
+      this.authService = new AuthService(User, passwordUtils, tokenUtils);
 
       this.bookService = new BookService(Book);
 
