@@ -163,7 +163,7 @@ STRIPE_WEBHOOK_SECRET= # Stripe webhook secret for verifying webhook events
 ## 🌟 Documentation
 
 Explore the full API documentation here:
-[API Documentation](http://127.0.0.1:8000/)
+[API Documentation](https://bookstore-api-documentation.readthedocs.io/en/latest/)
 
 The documentation provides a detailed explanation of all API endpoints, including their request and response formats, as well as common error responses.
 
