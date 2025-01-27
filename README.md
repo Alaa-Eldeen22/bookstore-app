@@ -78,15 +78,6 @@ This API is consumed by a React application developed by an innovative and creat
 
 ---
 
-## 🌟 Documentation
-
-Explore the full API documentation here:
-[API Documentation](http://127.0.0.1:8000/)
-
-The documentation provides a detailed explanation of all API endpoints, including their request and response formats, as well as common error responses.
-
----
-
 ## 🛠️ Technologies Used
 
 - **Backend**: Node.js, Express.js
@@ -166,6 +157,15 @@ STRIPE_WEBHOOK_SECRET= # Stripe webhook secret for verifying webhook events
    ```
    http://localhost:<API_PORT>
    ```
+
+---
+
+## 🌟 Documentation
+
+Explore the full API documentation here:
+[API Documentation](http://127.0.0.1:8000/)
+
+The documentation provides a detailed explanation of all API endpoints, including their request and response formats, as well as common error responses.
 
 ---
 
