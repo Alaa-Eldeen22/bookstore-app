@@ -1,100 +1,190 @@
 # Bookstore API
 
-The **Bookstore API** is a robust backend system for managing an online bookstore. It provides features like user authentication, book and review management, cart and wishlist operations, order processing (credit card and cash-on-delivery), and a powerful search functionality.
+Welcome to the **Bookstore API**, a powerful backend service that powers a seamless e-commerce platform for books. This API supports a wide range of features, including user authentication, book management, reviews, cart operations, wishlist functionality, and a secure checkout process with Stripe integration.
 
 ---
 
 ## Table of Contents
 
-1. [Features](#features)
-2. [Requirements](#requirements)
-3. [Installation](#installation)
-4. [Environment Variables](#environment-variables)
-5. [Usage](#usage)
-6. [API Documentation](#api-documentation)
-   
----
-
-## Features
-
-### User Management
-- **Authentication:** Supports secure user registration and login via token-based authentication (JWT).
-- **Password Encryption:** Passwords are hashed securely using `bcrypt`.
-
-### Book Management
-- **CRUD Operations:** Add, update, retrieve, and delete books.
-- **Search:** Case-insensitive and partial matching of book titles.
-
-### Review Management
-- **CRUD Operations:** Users can add, retrieve, update, and delete reviews for books.
-- **User Association:** Reviews are linked to authenticated users.
-
-### Cart and Wishlist Management
-- **Cart Operations:** Add, update, retrieve, and delete items in a user-specific cart.
-- **Wishlist Operations:** Add and remove items in a user-specific wishlist.
-
-### Order Management
-- **Place Orders:** Supports two modes of order placement - Credit Card (via Stripe) and Cash on Delivery.
-- **Order Confirmation:** Handles payment status updates and order confirmation (Stripe webhook support).
-
-### Security and Performance
-- **Rate Limiting:** Limits API requests to prevent DDoS attacks.
-- **IP Blocking:** Blocks abusive IPs for enhanced security.
-
-### Additional Features
-- Modular and scalable architecture.
-- Built-in logging and error handling.
-- MongoDB Atlas for database operations.
+1. [Purpose](#purpose)
+2. [Live Demo](#-live-demo)
+3. [Features](#-features)
+4. [Documentation](#-documentation)
+5. [Technologies Used](#%EF%B8%8F-technologies-used)
+6. [Project Structure](#-project-structure)
+7. [Environment Variables](#%EF%B8%8F-environment-variables)
+8. [Getting Started](#-getting-started)
+9. [Endpoints](#-endpoints)
+10. [Contributing](#-contributing)
+11. [License](#%EF%B8%8F-license)
+12. [Support](#-support)
 
 ---
 
-## Requirements
+## Purpose
 
-Before running the project, ensure you have the following installed:
-- **Node.js** (v16.x or later)
-- **npm** (v8.x or later)
-- **MongoDB Atlas** (or a local MongoDB server)
-- **Stripe Account** (for payment processing)
+The main objective of this project was to improve my backend development abilities, with a focus on JavaScript and adopting best practices for API design. Through this hands-on training, I aimed to achieve the following:
+
+
+
+- Designing a well-structured, modular architecture that adheres to the principles of layered design, ensuring a clear separation of concerns and enhancing code reusability and maintainability.
+- Mastering key principles of RESTful API design.
+- Incorporating robust security features, such as authentication, authorization, and encrypting sensitive data.
+- Creating and practicing global error handling mechanism.
+- Experimenting with dependency injection techniques in a framework like Express, which doesn’t provide native support for it.
+- Validating user input thoroughly to maintain data integrity.
 
 ---
 
-## Installation
+## 🚀 Live Demo
 
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/Alaa-Eldeen22/bookstore-app.git
+This API is consumed by a React application developed by an innovative and creative front-end developer.
+
+- **Frontend Developer**: [GitHub Profile](https://github.com/AbdelrahmanNasser00)
+- **Frontend Repository**: [Frontend GitHub Repo](https://github.com/AbdelrahmanNasser00/Book-Store)
+- **Frontend Live Demo**: [GitbookEG React App](https://gitbookeg.netlify.app/)
+
+---
+
+## 📋 Features
+
+1. **Authentication**
+
+   - Secure JWT-based user authentication.
+   - Role-based access control for Admins and Users.
+
+2. **Book Management**
+
+   - Add, update, delete, and retrieve books.
+   - Search for books by title.
+
+3. **Reviews**
+
+   - Add, update, retrieve, and delete reviews for books.
+
+4. **Cart Operations**
+
+   - Add, update, and delete items in the cart.
+   - Retrieve the user’s cart.
+
+5. **Wishlist Functionality**
+
+   - Add, remove, and view wishlist items.
+
+6. **Order Management**
+
+   - Place orders via cash-on-delivery or Stripe integration for credit card payments.
+   - Admin access for managing and updating orders.
+
+---
+
+## 🌟 Documentation
+
+Explore the full API documentation here:
+[API Documentation](http://127.0.0.1:8000/)
+
+The documentation provides a detailed explanation of all API endpoints, including their request and response formats, as well as common error responses.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **ORM**: Mongoose
+- **Authentication**: JWT
+- **Payment**: Stripe
+- **Validation**: Joi
+
+---
+
+## 📂 Project Structure
+
+```
+├── config          # Configuration files (e.g., dependency injection, environment variables)
+├── controllers     # API controllers handling request logic
+├── middlewares     # Middleware for authentication, validation, and more
+├── models          # Mongoose schemas and models
+├── routes          # API route definitions
+├── server.js       # Application entry point
+├── services        # Business logic services
+├── utils           # Helper utilities (e.g., JWT, encryption)
+└── validation      # Joi validation schemas
 ```
 
-### Step 2: Install Dependencies
-```bash
-npm install
+---
+
+## 🖥️ Environment Variables
+
+To run the project, create a `.env` file in the root directory and include the following variables:
+
 ```
-
-### Step 3: Set Up Environment Variables
-Create a `.env` file in the project root and add the following keys:
-
-```plaintext
-PORT=5000
-MONGO_URI=<Your MongoDB connection string>
-TOKEN_KEY=<JWT secret key>
-STRIPE_SECRET_KEY=<Your Stripe secret key>
-```
-
-### Step 4: Start the Server
-
-
-```bash
-npm start
+API_PORT=           # The port number on which the API server will run
+TOKEN_KEY=          # Secret key for signing JWT tokens
+MONGO_URI=          # MongoDB connection string
+STRIPE_KEY=         # Secret key for Stripe payment integration
+DOMAIN=             # Domain of your application (e.g., http://localhost:3000)
+STRIPE_WEBHOOK_SECRET= # Stripe webhook secret for verifying webhook events
 ```
 
 ---
 
-## Usage
+## 🚀 Getting Started
 
-### Access the API
-Use any API client (e.g., Postman, Thunder Client) to interact with the endpoints. Refer to the API Documentation section for details.
+### Prerequisites
+
+- **Node.js**: v14 or higher
+- **MongoDB**: A running instance of MongoDB or a cloud MongoDB database.
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-repo/bookstore-api.git
+   cd bookstore-api
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables in a `.env` file as described above.
+
+4. Start the MongoDB server.
+
+5. Start the API:
+
+   ```bash
+   npm start
+   ```
+
+6. The server will be running on:
+
+   ```
+   http://localhost:<API_PORT>
+   ```
 
 ---
 
-## API Documentation
+## 🤝 Contributing
 
+Contributions are welcome! Feel free to fork the repo and submit a pull request.
+
+1. Fork the project
+2. Create your feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Open a pull request
+
+---
+
+## 🛡️ License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+Happy coding!
