@@ -1,0 +1,19 @@
+site_name: My API Documentation
+site_url: https://my-api-docs.readthedocs.io
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - API Documentation:
+      - Endpoints:
+          - Books: books.md
+          - Cart: cart.md
+          - Orders: order.md
+          - Reviews: reviews.md
+          - Wishlist: wishlist.md
+
+# Optionally, you can enable search
+search:
+  enable: true

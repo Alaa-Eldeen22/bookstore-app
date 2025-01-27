@@ -1,6 +1,8 @@
-const ReviewModel = require("../models/Review");
-
 class ReviewService {
+  constructor(ReviewModel) {
+    this.ReviewModel = ReviewModel;
+  }
+
   /**
    * Adds a new review to a book.
    * @param {string} bookId - The ID of the book.

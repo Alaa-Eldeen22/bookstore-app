@@ -1,8 +1,6 @@
-const ReviewService = require("../services/ReviewService");
-
 class ReviewController {
-  constructor() {
-    this.reviewService = new ReviewService();
+  constructor(reviewService) {
+    this.reviewService = reviewService;
   }
 
   /**

@@ -62,6 +62,7 @@ class BookService {
    * @param {string} title - The title (or partial title) to search for.
    */
   async searchByTitle(title) {
+    
     const books = await this.BookModel.find({
       name: { $regex: title, $options: "i" },
     });
